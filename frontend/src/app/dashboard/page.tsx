@@ -21,7 +21,7 @@ export default function Dashboard() {
         <header className="flex justify-between items-center">
           <div>
             <h2 className="text-2xl font-semibold">Hi, Praise Godwins</h2>
-            <p className="text-gray-600">Let’s finish your task today!</p>
+            <p className="text-gray-600">Let&#39;s finish your task today!</p>
           </div>
           <Image
             src="/assets/avatar1.png"
