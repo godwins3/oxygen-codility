@@ -61,7 +61,7 @@ const AuthPage = ({ page }: { page: AuthPage }) => {
           {/* Links */}
           {page === "signin" && (
             <div className="mt-4 text-center text-sm text-gray-600">
-              <Link href="/auth/reset" className="text-blue-600 hover:underline">
+              <Link href="/reset-password" className="text-blue-600 hover:underline">
                 Forgot Password?
               </Link>
             </div>
@@ -70,7 +70,7 @@ const AuthPage = ({ page }: { page: AuthPage }) => {
           {page === "signup" && (
             <div className="mt-4 text-center text-sm text-gray-600">
               Already have an account?{" "}
-              <Link href="/auth/signin" className="text-blue-600 hover:underline">
+              <Link href="/login" className="text-blue-600 hover:underline">
                 Sign In
               </Link>
             </div>
@@ -79,7 +79,7 @@ const AuthPage = ({ page }: { page: AuthPage }) => {
           {page === "signin" && (
             <div className="mt-4 text-center text-sm text-gray-600">
               Don't have an account?{" "}
-              <Link href="/auth/signup" className="text-blue-600 hover:underline">
+              <Link href="/register" className="text-blue-600 hover:underline">
                 Sign Up
               </Link>
             </div>
