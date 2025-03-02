@@ -16,7 +16,7 @@ const RunningTask = () => {
                     
                     <circle
                     className="text-gray-200 stroke-current"
-                    stroke-width="10"
+                    strokeWidth="10"
                     cx="50"
                     cy="50"
                     r="40"
@@ -24,17 +24,17 @@ const RunningTask = () => {
                     ></circle>
                     <circle
                     className="text-indigo-500  progress-ring__circle stroke-current"
-                    stroke-width="10"
-                    stroke-linecap="round"
+                    strokeWidth="10"
+                    strokeLinecap="round"
                     cx="50"
                     cy="50"
                     r="40"
                     fill="transparent"
-                    stroke-dasharray="251.2" 
-                    stroke-dashoffset="calc(251.2px - (251.2px * 70) / 100)"
+                    strokeDasharray="251.2" 
+                    strokeDashoffset="calc(251.2px - (251.2px * 70) / 100)"
                     ></circle>
                     
-                    <text x="50" y="50" font-family="Verdana" font-size="12" text-anchor="middle" alignment-baseline="middle">70%</text>
+                    <text x="50" y="50" fontFamily="Verdana" fontSize="12" textAnchor="middle" alignmentBaseline="middle">70%</text>
 
                 </svg>
                 </div>
