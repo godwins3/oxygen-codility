@@ -82,9 +82,15 @@ frontend/
 
 ```bash
 infra/
-│── docker-compose.yml     # Docker Compose file
-│── nginx/                  # Nginx configuration
-│   ├── default.conf       # Nginx server configuration
+│── database/               # Database setup
+│   │── init.sql            # Initial DB setup script (if needed)
+│   │── Dockerfile          # Dockerfile for PostgreSQL setup
+│── docker-compose.yml      # Docker setup for backend, frontend, and DB
+│── nginx.conf              # Reverse proxy config (if needed)
+│── .github/
+│   ├── workflows/
+│   │   ├── ci-cd.yml       # GitHub Actions pipeline
+
 ```
 
 ## �� Quick Start
