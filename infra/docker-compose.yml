@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  postgres:
+    build: ./database
+    container_name: oxygene_db
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: oxygene
+      POSTGRES_USER: oxygene_user
+      POSTGRES_PASSWORD: strongpassword
+
+  backend:
+    build: ../backend
+    container_name: oxygene_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgresql://oxygene_user:strongpassword@postgres:5432/oxygene
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build: ../frontend
+    container_name: oxygene_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+
+volumes:
+  postgres_data:
