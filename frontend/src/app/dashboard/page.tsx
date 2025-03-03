@@ -8,10 +8,12 @@ import TaskToday from "@/components/TaskToday";
 import RunningTask from "@/components/RunningTask";
 import UpcomingTask from "@/components/UpcomingTask";
 import MonthlyMentors from "@/components/MonthlyMentors";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function Dashboard() {
 
   return (
+    <ProtectedRoute>
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <Sidebar />
@@ -54,5 +56,6 @@ export default function Dashboard() {
         <TaskToday />
       </aside>
     </div>
+    </ProtectedRoute>
   );
 }

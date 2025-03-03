@@ -2,15 +2,57 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "@/store/authSlice";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { signIn, signUp, resetPassword } from "@/lib/api";
 
 type AuthPage = "signin" | "signup" | "reset";
 
 const AuthPage = ({ page }: { page: AuthPage }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      let response;
+      if (page === "signin") {
+        response = await signIn(email, password);
+        if (response.access_token) {
+          dispatch(loginSuccess(response.access_token));
+          router.push("/dashboard");
+        }
+      } else if (page === "signup") {
+        response = await signUp(email, password);
+        if (response.success) {
+          router.push("/login");
+        }
+      } else if (page === "reset") {
+        response = await resetPassword(email);
+        if (response.success) {
+          alert("Password reset link sent!");
+        }
+      }
+      if (response.error) {
+        setError(response.error);
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
@@ -21,7 +63,7 @@ const AuthPage = ({ page }: { page: AuthPage }) => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -31,6 +73,7 @@ const AuthPage = ({ page }: { page: AuthPage }) => {
                 className="mt-1 w-full"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
 
@@ -44,17 +87,16 @@ const AuthPage = ({ page }: { page: AuthPage }) => {
                   className="mt-1 w-full"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
             )}
 
-            {/* Sign In Button */}
-            <Button className="w-full bg-blue-600 text-white hover:bg-blue-700">
-              {page === "signin"
-                ? "Sign In"
-                : page === "signup"
-                ? "Create Account"
-                : "Send Reset Link"}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+            {/* Submit Button */}
+            <Button type="submit" className="w-full bg-blue-600 text-white hover:bg-blue-700" disabled={loading}>
+              {loading ? "Processing..." : page === "signin" ? "Sign In" : page === "signup" ? "Create Account" : "Send Reset Link"}
             </Button>
           </form>
 
