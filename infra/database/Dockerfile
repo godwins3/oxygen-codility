@@ -1,5 +1,5 @@
 # Use official PostgreSQL image
-FROM postgres:15
+FROM docker.io/library/postgres:15
 
 # Set environment variables for PostgreSQL
 ENV POSTGRES_DB=oxygene
@@ -10,4 +10,4 @@ ENV POSTGRES_PASSWORD=strongpassword
 COPY init.sql /docker-entrypoint-initdb.d/
 
 # Expose PostgreSQL port
-EXPOSE 5432
+EXPOSE 5432 

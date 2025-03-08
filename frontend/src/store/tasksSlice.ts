@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchTasks } from "@/lib/api";
 
 interface Task {
   id: string;
@@ -16,28 +17,6 @@ const initialState: { tasks: Task[]; loading: boolean; error: string | null } = 
 };
 
 
-// Async thunk to fetch tasks from API
-export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (_, { getState }) => {
-  const state: any = getState();
-  const token = state.auth?.token; // Ensure you have the correct path to the token
-  console.log(state);
-
-  if (!token) {
-    throw new Error("Unauthorized: No token found");
-  }
-
-  const response = await fetch("http://localhost:8000/api/tasks", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) throw new Error("Failed to fetch tasks");
-
-  return await response.json();
-});
 
 
 const tasksSlice = createSlice({

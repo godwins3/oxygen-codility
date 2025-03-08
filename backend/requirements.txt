@@ -1,0 +1,12 @@
+uvicorn
+gunicorn
+fastapi
+sqlalchemy
+python-jose
+pyjwt
+pydantic
+pydantic-settings
+psycopg2
+email_validator
+passlib
+python-multipart

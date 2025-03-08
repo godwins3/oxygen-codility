@@ -1,18 +1,24 @@
-version: "3.9"
-
 services:
-  postgres:
-    build: ./database
+  database:
+    image: postgres:15
     container_name: oxygene_db
     restart: always
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_DB: oxygene
       POSTGRES_USER: oxygene_user
       POSTGRES_PASSWORD: strongpassword
+    networks:
+      - oxygene_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U oxygene_user -d oxygene" ]
+      interval: 5s
+      retries: 5
+      start_period: 10s
 
   backend:
     build: ../backend
@@ -21,10 +27,14 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - postgres
+      - database
     environment:
-      DATABASE_URL: postgresql://oxygene_user:strongpassword@postgres:5432/oxygene
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      - DATABASE_URL: postgresql://oxygene_user:strongpassword@postgres:5432/oxygene
+      - SECRET_KEY: fdaa596b9b78725f231c1c45cd6f8600a236201813318ad393584f7f88ce996c
+    command: >
+      sh /startup.sh
+    networks:
+      - oxygene_network
 
   frontend:
     build: ../frontend
@@ -35,7 +45,14 @@ services:
     depends_on:
       - backend
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000
+      NEXT_PUBLIC_API_URL: http://backend:8000 # Use service name instead of localhost
+    networks:
+      - oxygene_network
 
 volumes:
   postgres_data:
+
+
+networks:
+  oxygene_network:
+    driver: bridge

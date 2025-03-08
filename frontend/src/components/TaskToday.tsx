@@ -34,7 +34,7 @@ const TaskToday = () => {
           <div className="mt-6">
             <h4 className="font-semibold">Detail Task</h4>
             <ul className="mt-2 space-y-2">
-              <li className="text-sm">1. {tasks[0].description}</li>
+              <li className="text-sm">1. {tasks[0]?.description}</li>
             </ul>
             <button className="mt-4 bg-blue-500 text-white w-full py-2 rounded">
               Go To Detail
