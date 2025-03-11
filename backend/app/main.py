@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import auth, tasks
+from app.api import auth, tasks, health
 from app.core.config import settings
 from app.core.database import engine
 from app.models import user, task
@@ -29,6 +29,7 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(tasks.router, prefix="/api", tags=["tasks"])
+app.include_router(health.router, tags=["health"])
 
 if __name__ == "__main__":
     import uvicorn

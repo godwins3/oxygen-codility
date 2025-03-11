@@ -4,8 +4,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Progress } from "./ui/progress";
 import Image from "next/image";
-import { fetchTasks } from "@/store/tasksSlice";
+// import { fetchTasks } from "@/store/tasksSlice";
+import { fetchTasks } from "@/lib/api";
 import { RootState, AppDispatch } from "@/store/store";
+
 
 const TaskToday = () => {
     const dispatch = useDispatch<AppDispatch>();

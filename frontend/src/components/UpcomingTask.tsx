@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card } from "./ui/card";
 import { Progress } from "./ui/progress";
 import Image from "next/image";
-import { fetchTasks } from "@/store/tasksSlice";
+// import { fetchTasks } from "@/store/tasksSlice";
+import { fetchTasks } from "@/lib/api";
 import { RootState, AppDispatch } from "@/store/store";
 
 const UpcomingTask = () => {

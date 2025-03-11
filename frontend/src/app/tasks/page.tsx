@@ -80,7 +80,8 @@ import { FaSearch, FaFilter, FaBell } from "react-icons/fa";
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
 import Sidebar from "@/components/Sidebar";
-import { fetchTasks } from "@/store/tasksSlice";
+// import { fetchTasks } from "@/store/tasksSlice";
+import { fetchTasks } from "@/lib/api";
 import { RootState, AppDispatch } from "@/store/store";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
